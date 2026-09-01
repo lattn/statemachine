@@ -11,7 +11,6 @@ type StateHandler[T any] interface {
 }
 
 type StateHandlerWithInit[T any] interface {
-	StateHandler[T]
 	Init(<-chan struct{})
 }
 
@@ -53,7 +52,7 @@ func (s *StateGroup[K, T]) Begin(ctx context.Context, id K, userState T) error {
 
 	sm, exist := s.sms[id]
 	if exist {
-		return fmt.Errorf("Begin: already tracking identifier `%v`", id)
+		return fmt.Errorf("begin: already tracking identifier `%v`", id)
 	}
 
 	exists, err := s.sts.Has(ctx, id)
